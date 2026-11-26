@@ -1,10 +1,11 @@
-Dockerfile
-FROM python:3.11
+FROM python:3.11-slim
 
 WORKDIR /app
 
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
 COPY . .
 
-RUN pip install pandas numpy scikit-learn matplotlib
-
-CMD ["python", "anomaly_detector.py"]
+ENTRYPOINT ["python", "anomaly_detector.py"]
+CMD ["sample_data/sensor_readings.csv", "--out", "output"]
